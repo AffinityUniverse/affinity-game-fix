@@ -1,0 +1,19 @@
+
+#affinityShortcutGame #asgLives, #app #lives {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  max-width: 100%;
+}
+#affinityShortcutGame #asgLives i, #app #lives i {
+  display: block;
+  width: clamp(8px, 2.4vw, 18px);
+  aspect-ratio: 9 / 8;
+  height: auto !important;
+  background: url("pixel-heart.png") center / contain no-repeat;
+  image-rendering: pixelated;
+}
+#asgLives .lost, #lives .lost { filter: grayscale(1); opacity: .38; }
+#affinityShortcutGame .asg-card-helper::before,
+#affinityShortcutGame .asg-card-helper::after { content: none !important; }

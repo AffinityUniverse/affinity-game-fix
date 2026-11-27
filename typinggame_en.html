@@ -977,6 +977,7 @@ html, body {
 </style>
 
 
+<link rel="stylesheet" href="game-hearts.css">
 </head>
 <body>
 <main class="app" id="app">
@@ -992,7 +993,7 @@ html, body {
       <div class="stat"><span>Score</span><strong id="score">0</strong></div>
       <div class="stat"><span>Combo</span><strong id="combo">0</strong></div>
       <div class="stat"><span>Level</span><strong id="levelStat">1 / 10</strong></div>
-      <div class="stat"><span>Lives</span><strong class="hearts" id="lives">❤️❤️❤️❤️❤️</strong></div>
+      <div class="stat"><span>Lives</span><strong class="hearts" id="lives" aria-label="Lives 5/5"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i></strong></div>
     </div>
   </header>
 
@@ -1500,7 +1501,7 @@ function renderCard(c){
   }
 }
 function removeCard(c){state.cards=state.cards.filter(x=>x!==c);setTimeout(()=>c.el.remove(),140)}
-function updateUI(){scoreEl.textContent=state.score;comboEl.textContent=state.combo;livesEl.textContent='❤️'.repeat(Math.max(0,state.lives))+'🖤'.repeat(Math.max(0,5-state.lives));levelStat.textContent=`${state.level} / 10`;levelTitle.textContent=`LEVEL ${state.level}`;progressText.textContent=`${state.correctInLevel} / 10`;progressFill.style.width=(state.correctInLevel*10)+'%';levelDesc.textContent=state.level<10?`Type 10 words correctly to reach LEVEL ${state.level+1}.`:'Type 10 words correctly to complete the game!';const korean=language.value==='ko';zoneLabel.textContent=korean?'KOREAN TYPING ZONE':'ENGLISH TYPING ZONE';game.classList.toggle('korean-mode',korean);input.placeholder=korean?'TYPE IN KOREAN (한글)':'TYPE HERE';const subtitle=$('#gameSubtitle'),tip=$('#readyTip'),instruction=$('#readyInstruction');if(subtitle)subtitle.textContent=korean?'Type each Korean word using your Hangul keyboard.':'Type the falling words exactly as shown.';if(instruction)instruction.textContent=korean?'Switch to your Korean (Hangul) keyboard, then type the words on the falling cards.':'Start the game, then type the falling words below.';if(tip)tip.textContent=korean?'English meanings appear below each Korean word.':'Only English words will appear.';const everyday=category.querySelector('option[value="everyday"]');if(everyday){everyday.hidden=!korean;everyday.disabled=!korean;}if(!korean&&category.value==='everyday')category.value='all'}
+function updateUI(){scoreEl.textContent=state.score;comboEl.textContent=state.combo;Array.from(livesEl.children).forEach((heart,index)=>heart.classList.toggle('lost',index>=state.lives));livesEl.setAttribute('aria-label',`Lives ${state.lives}/5`);levelStat.textContent=`${state.level} / 10`;levelTitle.textContent=`LEVEL ${state.level}`;progressText.textContent=`${state.correctInLevel} / 10`;progressFill.style.width=(state.correctInLevel*10)+'%';levelDesc.textContent=state.level<10?`Type 10 words correctly to reach LEVEL ${state.level+1}.`:'Type 10 words correctly to complete the game!';const korean=language.value==='ko';zoneLabel.textContent=korean?'KOREAN TYPING ZONE':'ENGLISH TYPING ZONE';game.classList.toggle('korean-mode',korean);input.placeholder=korean?'TYPE IN KOREAN (한글)':'TYPE HERE';const subtitle=$('#gameSubtitle'),tip=$('#readyTip'),instruction=$('#readyInstruction');if(subtitle)subtitle.textContent=korean?'Type each Korean word using your Hangul keyboard.':'Type the falling words exactly as shown.';if(instruction)instruction.textContent=korean?'Switch to your Korean (Hangul) keyboard, then type the words on the falling cards.':'Start the game, then type the falling words below.';if(tip)tip.textContent=korean?'English meanings appear below each Korean word.':'Only English words will appear.';const everyday=category.querySelector('option[value="everyday"]');if(everyday){everyday.hidden=!korean;everyday.disabled=!korean;}if(!korean&&category.value==='everyday')category.value='all'}
 // Canvas-based praise fireworks: one reusable layer instead of ~100 animated DOM nodes.
 let praiseCanvas=null,praiseCtx=null,praiseRaf=0,praiseBurstId=0,praiseFireworksTimer=0,activePraiseWord=null;
 function stopReferenceFireworks(){
